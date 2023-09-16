@@ -4,11 +4,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
+import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
-import { ButtonModule } from 'primeng/button';
-import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 import { CookieService } from 'ngx-cookie-service';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -18,15 +18,15 @@ import { HomeComponent } from './modules/home/home.component';
 @NgModule({
   declarations: [AppComponent, HomeComponent],
   imports: [
-    BrowserModule,
+    AppRoutingModule,
     BrowserAnimationsModule,
+    BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
-    AppRoutingModule,
-    // PrimeNG
+    // PrimeNg
+    ButtonModule,
     CardModule,
     InputTextModule,
-    ButtonModule,
     ToastModule,
   ],
   providers: [CookieService, MessageService],
