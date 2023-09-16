@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 
 import { MessageService } from 'primeng/api';
 
@@ -11,8 +12,10 @@ import { ProductsService } from 'src/app/services/products/products.service';
   templateUrl: './dashboard-home.component.html',
   styleUrls: [],
 })
-export class DashboardHomeComponent implements OnInit {
+export class DashboardHomeComponent implements OnInit, OnDestroy {
   productsList: GetAllProductsResponse[] = [];
+
+  private destroy$ = new Subject<void>();
 
   constructor(
     private productsService: ProductsService,
@@ -24,23 +27,31 @@ export class DashboardHomeComponent implements OnInit {
     this.productsData();
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   productsData(): void {
-    this.productsService.getAllProducts().subscribe({
-      next: (response) => {
-        if (response.length > 0) {
-          this.productsList = response;
-          this.productsDataTransferService.setProductsData(this.productsList);
-        }
-      },
-      error: (err) => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Erro',
-          detail: 'Erro ao buscar produtos!',
-          life: 2500,
-        });
-        console.error(err);
-      },
-    });
+    this.productsService
+      .getAllProducts()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response) => {
+          if (response.length > 0) {
+            this.productsList = response;
+            this.productsDataTransferService.setProductsData(this.productsList);
+          }
+        },
+        error: (err) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erro',
+            detail: 'Erro ao buscar produtos!',
+            life: 2500,
+          });
+          console.error(err);
+        },
+      });
   }
 }
