@@ -5,10 +5,12 @@ import { RouterModule } from '@angular/router';
 
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { ChartModule } from 'primeng/chart';
+import { MessageService } from 'primeng/api';
 import { SidebarModule } from 'primeng/sidebar';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
-import { MessageService } from 'primeng/api';
+
 import { CookieService } from 'ngx-cookie-service';
 
 import { DashboardHomeComponent } from './page/dashboard-home/dashboard-home.component';
@@ -24,6 +26,7 @@ import { DASHBOARD_ROUTES } from './dashboard.routing';
     // PrimeNg
     ButtonModule,
     CardModule,
+    ChartModule,
     SidebarModule,
     ToastModule,
     ToolbarModule,

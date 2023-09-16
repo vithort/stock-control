@@ -34,6 +34,7 @@ https://primeng.org/icons
 https://primeflex.org/
 
 https://www.npmjs.com/package/ngx-cookie-service
+https://primeng.org/chart
 
 # API
 
