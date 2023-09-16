@@ -18,7 +18,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   productsChartOptions!: ChartOptions;
   productsList: GetAllProductsResponse[] = [];
 
-  private destroy$ = new Subject<void>();
+  private readonly destroy$ = new Subject<void>();
 
   constructor(
     private messageService: MessageService,

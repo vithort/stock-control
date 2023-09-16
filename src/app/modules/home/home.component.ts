@@ -29,7 +29,7 @@ export class HomeComponent implements OnDestroy {
     password: ['', Validators.required],
   });
 
-  private destroy$ = new Subject<void>();
+  private readonly destroy$ = new Subject<void>();
 
   constructor(
     private cookieService: CookieService,
