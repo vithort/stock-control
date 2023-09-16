@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { MessageService } from 'primeng/api';
 
+import { EventAction } from 'src/app/models/interfaces/products/event/EventAction';
 import { GetAllProductsResponse } from 'src/app/models/interfaces/products/response/GetAllProductsResponse';
 import { ProductsDataTransferService } from 'src/app/shared/services/products/products-data-transfer/products-data-transfer.service';
 import { ProductsService } from 'src/app/services/products/products.service';
@@ -63,5 +64,11 @@ export class ProductsHomeComponent implements OnInit, OnDestroy {
           this.router.navigate(['/dashboard']);
         },
       });
+  }
+
+  handleProductAction(event: EventAction): void {
+    if (event) {
+      console.log('DADOS DO EVENTO RECEBIDO', event);
+    }
   }
 }
