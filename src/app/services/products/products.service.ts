@@ -6,8 +6,10 @@ import { CookieService } from 'ngx-cookie-service';
 
 import { environment } from 'src/environments/environment';
 
-import { GetAllProductsResponse } from 'src/app/models/interfaces/products/response/GetAllProductsResponse';
+import { CreateProductRequest } from 'src/app/models/interfaces/products/request/CreateProductRequest';
+import { CreateProductResponse } from 'src/app/models/interfaces/products/response/CreateProductResponse';
 import { DeleteProductResponse } from 'src/app/models/interfaces/products/response/DeleteProductResponse';
+import { GetAllProductsResponse } from 'src/app/models/interfaces/products/response/GetAllProductsResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -42,6 +44,16 @@ export class ProductsService {
           product_id: product_id,
         },
       }
+    );
+  }
+
+  createProduct(
+    requestData: CreateProductRequest
+  ): Observable<CreateProductResponse> {
+    return this.http.post<CreateProductResponse>(
+      `${this.API_URL}/product`,
+      requestData,
+      this.httpOptions
     );
   }
 }
