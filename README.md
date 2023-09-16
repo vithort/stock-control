@@ -33,6 +33,8 @@ https://primeng.org/installation
 https://primeng.org/icons
 https://primeflex.org/
 
+https://www.npmjs.com/package/ngx-cookie-service
+
 # API
 
 https://github.com/marcosJuniorPassarella/stock-api
