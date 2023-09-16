@@ -15,6 +15,7 @@ import { CookieService } from 'ngx-cookie-service';
 
 import { DashboardHomeComponent } from './page/dashboard-home/dashboard-home.component';
 import { DASHBOARD_ROUTES } from './dashboard.routing';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [DashboardHomeComponent],
@@ -30,6 +31,8 @@ import { DASHBOARD_ROUTES } from './dashboard.routing';
     SidebarModule,
     ToastModule,
     ToolbarModule,
+    // Shared
+    SharedModule,
   ],
   providers: [MessageService, CookieService],
 })
