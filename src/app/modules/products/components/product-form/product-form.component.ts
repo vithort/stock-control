@@ -1,3 +1,4 @@
+import { SaleProductRequest } from './../../../../models/interfaces/products/request/SaleProductRequest';
 import { ProductsDataTransferService } from './../../../../shared/services/products/products-data-transfer/products-data-transfer.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -9,12 +10,12 @@ import { MessageService } from 'primeng/api';
 
 import { CategoriesService } from './../../../../services/categories/categories.service';
 import { CreateProductRequest } from 'src/app/models/interfaces/products/request/CreateProductRequest';
-import { GetCategoriesResponse } from 'src/app/models/interfaces/categories/GetCategoriesResponse';
-import { ProductsService } from 'src/app/services/products/products.service';
+import { EditProductRequest } from 'src/app/models/interfaces/products/request/EditProductRequest';
 import { EventAction } from 'src/app/models/interfaces/products/event/EventAction';
 import { GetAllProductsResponse } from 'src/app/models/interfaces/products/response/GetAllProductsResponse';
+import { GetCategoriesResponse } from 'src/app/models/interfaces/categories/GetCategoriesResponse';
 import { ProductEvent } from 'src/app/models/enums/products/ProductEvent';
-import { EditProductRequest } from 'src/app/models/interfaces/products/request/EditProductRequest';
+import { ProductsService } from 'src/app/services/products/products.service';
 
 @Component({
   selector: 'app-product-form',
@@ -50,6 +51,12 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   productsData!: GetAllProductsResponse[];
   renderDropdown = false;
   saleProductAction = ProductEvent.SALE_PRODUCT_EVENT;
+  saleProductForm = this.formBuilder.group({
+    amount: [0, Validators.required],
+    product_id: ['', Validators.required],
+  });
+
+  saleProductSelected!: GetAllProductsResponse;
   selectedCategory: { name: string; code: string }[] = [];
 
   private readonly destroy$: Subject<void> = new Subject();
@@ -221,5 +228,43 @@ export class ProductFormComponent implements OnInit, OnDestroy {
           console.error(err);
         },
       });
+  }
+
+  handleSubmitSaleProduct(): void {
+    if (this.saleProductForm?.value && this.saleProductForm?.valid) {
+      const requestData: SaleProductRequest = {
+        amount: this.saleProductForm?.value?.amount as number,
+        product_id: this.saleProductForm?.value?.product_id as string,
+      };
+
+      this.productsService
+        .saleProduct(requestData)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (response) => {
+            if (response) {
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Sucesso',
+                detail: 'Venda efetuada com sucesso!',
+                life: 2500,
+              });
+              this.saleProductForm.reset();
+              this.getProductData();
+
+              this.router.navigate(['/dashboard']);
+            }
+          },
+          error: (err) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Erro',
+              detail: 'Erro ao vender produto!',
+              life: 2500,
+            });
+            console.error(err);
+          },
+        });
+    }
   }
 }
