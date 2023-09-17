@@ -78,7 +78,7 @@ export class ProductsHomeComponent implements OnInit, OnDestroy {
         header: event?.action,
         width: '70%',
         contentStyle: { overflow: 'auto' },
-        baseZIndex: 1000,
+        baseZIndex: 10000,
         maximizable: true,
         data: {
           event: event,

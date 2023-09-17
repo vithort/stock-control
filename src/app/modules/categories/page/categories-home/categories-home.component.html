@@ -3,6 +3,7 @@
 <app-categories-table
   [categories]="categoriesData"
   (deleteCategoryEvent)="handleDeleteCategoryAction($event)"
+  (categoryEvent)="handleCategoryAction($event)"
 ></app-categories-table>
 
 <p-confirmDialog [style]="{ width: '50vw' }"></p-confirmDialog>

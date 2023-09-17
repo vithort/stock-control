@@ -34,7 +34,7 @@ export class CategoriesService {
     return this.http.delete<void>(`${this.API_URL}/category/delete`, {
       ...this.httpOptions,
       params: {
-        category: requestData?.category_id,
+        category_id: requestData?.category_id,
       },
     });
   }
