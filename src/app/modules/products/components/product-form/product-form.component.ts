@@ -35,6 +35,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   editProductAction = ProductEvent.EDIT_PRODUCT_EVENT;
   editProductForm = this.formBuilder.group({
     amount: [0, Validators.required],
+    category_id: ['', Validators.required],
     description: ['', Validators.required],
     name: ['', Validators.required],
     price: ['', Validators.required],
@@ -47,6 +48,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
 
   productSelectedData!: GetAllProductsResponse;
   productsData!: GetAllProductsResponse[];
+  renderDropdown = false;
   saleProductAction = ProductEvent.SALE_PRODUCT_EVENT;
   selectedCategory: { name: string; code: string }[] = [];
 
@@ -65,19 +67,11 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.productAction = this.ref.data;
 
-    if (
-      this.productAction?.event?.action === this.editProductAction &&
-      this.productAction?.productsData
-    ) {
-      this.getProductSelectedData(this.productAction?.event?.id as string);
-    }
-
     this.productAction?.event?.action === this.saleProductAction &&
       this.getProductData();
 
-    if (this.productAction?.event?.action === this.addProductAction) {
-      this.getAllCategories();
-    }
+    this.getAllCategories();
+    this.renderDropdown = true;
   }
 
   ngOnDestroy(): void {
@@ -93,6 +87,15 @@ export class ProductFormComponent implements OnInit, OnDestroy {
         next: (response) => {
           if (response.length > 0) {
             this.categoriesData = response;
+
+            if (
+              this.productAction?.event?.action === this.editProductAction &&
+              this.productAction?.productsData
+            ) {
+              this.getProductSelectedData(
+                this.productAction?.event?.id as string
+              );
+            }
           }
         },
       });
@@ -145,6 +148,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     ) {
       const requestEditProduct: EditProductRequest = {
         amount: Number(this.editProductForm.value.amount),
+        category_id: this.editProductForm.value.category_id as string,
         description: this.editProductForm.value.description as string,
         name: this.editProductForm.value.name as string,
         price: this.editProductForm.value.price as string,
@@ -190,6 +194,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
 
         this.editProductForm.setValue({
           amount: this.productSelectedData?.amount,
+          category_id: this.productSelectedData?.category?.id,
           description: this.productSelectedData?.description,
           name: this.productSelectedData?.name,
           price: this.productSelectedData?.price,

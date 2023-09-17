@@ -40,6 +40,18 @@
     <div class="card flex flex-column md:flex-column gap-3">
       <!-- Nome do produto -->
       <input pInputText placeholder="Nome" formControlName="name" />
+      <!-- Categoria do produto -->
+      <div *ngIf="renderDropdown">
+        <p-dropdown
+          [(ngModel)]="selectedCategory"
+          [options]="categoriesData"
+          formControlName="category_id"
+          optionLabel="name"
+          optionValue="id"
+          placeholder="Selecione uma categoria"
+          styleClass="w-full"
+        ></p-dropdown>
+      </div>
       <!-- Preço do produto -->
       <input pInputText placeholder="Preço" formControlName="price" />
       <!-- Descrição do produto -->
