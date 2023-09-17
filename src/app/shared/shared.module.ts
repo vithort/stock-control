@@ -9,9 +9,10 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
 import { ToolbarNavigationComponent } from './components/toolbar-navigation/toolbar-navigation.component';
+import { ShortenPipe } from './pipes/shorten/shorten.pipe';
 
 @NgModule({
-  declarations: [ToolbarNavigationComponent],
+  declarations: [ShortenPipe, ToolbarNavigationComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -22,7 +23,7 @@ import { ToolbarNavigationComponent } from './components/toolbar-navigation/tool
     CardModule,
     ToolbarModule,
   ],
-  exports: [ToolbarNavigationComponent],
+  exports: [ShortenPipe, ToolbarNavigationComponent],
   providers: [DialogService, CurrencyPipe],
 })
 export class SharedModule {}
