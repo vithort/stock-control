@@ -15,6 +15,14 @@ const routes: Routes = [
     component: HomeComponent,
   },
   {
+    path: 'categories',
+    loadChildren: () =>
+      import('./modules/categories/categories.module').then(
+        (m) => m.CategoriesModule
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'dashboard',
     loadChildren: () =>
       import('./modules/dashboard/dashboard.module').then(
