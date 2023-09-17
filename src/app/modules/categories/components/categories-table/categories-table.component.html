@@ -74,6 +74,9 @@
                   class="p-button-rounded p-button-danger"
                   pTooltip="Remover categoria"
                   tooltipPosition="top"
+                  (click)="
+                    handleDeleteCategoryEvent(category?.id, category?.name)
+                  "
                 ></button>
               </div>
             </td>
